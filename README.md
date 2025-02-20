@@ -1,1 +1,1 @@
-# MS-KSD-Bayes
+# MSKSD-Bayes
