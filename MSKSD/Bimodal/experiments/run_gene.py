@@ -19,9 +19,9 @@ except ImportError:
     if str(project_root) not in sys.path:
         sys.path.insert(0, str(project_root))
 
-    from msksd.Bimodal.run_kef import run_KEF
-    from msksd.Bimodal.nearestSPD import nearestSPD
-    from msksd.Bimodal.pdf_KEF import PDF_KEF
+    from Bimodal.run_kef import run_KEF
+    from Bimodal.nearestSPD import nearestSPD
+    from Bimodal.pdf_KEF import PDF_KEF
 
 ###############################################################################
 #                           Configuration & Prior                             #

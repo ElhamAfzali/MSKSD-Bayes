@@ -19,11 +19,11 @@ except ImportError:
     if str(project_root) not in sys.path:
         sys.path.insert(0, str(project_root))
 
-    from msksd.src.kernel import Scaled_PIMQ
-    from msksd.src.KSD_Bayes import KSD_Bayes
-    from msksd.src.rscm_torch import RSCMEstimator
-    from msksd.Unimodal.M_Gauss import MGauss
-    from msksd.Unimodal.Gauss import Gauss
+    from src.kernel import Scaled_PIMQ
+    from src.KSD_Bayes import KSD_Bayes
+    from src.rscm_torch import RSCMEstimator
+    from Unimodal.M_Gauss import MGauss
+    from Unimodal.Gauss import Gauss
 
 
 def compute_log_p(x, mu, sigma):

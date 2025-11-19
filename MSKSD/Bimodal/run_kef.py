@@ -18,11 +18,11 @@ except ImportError:
     if str(project_root) not in sys.path:
         sys.path.insert(0, str(project_root))
 
-    from msksd.Bimodal.KEF import KEF
-    from msksd.Bimodal.M_KEF import MKEF
-    from msksd.src.kernel import Scaled_PIMQ
-    from msksd.src.KSD_Bayes import KSD_Bayes
-    from msksd.src.rscm_torch import RSCMEstimator
+    from Bimodal.KEF import KEF
+    from Bimodal.M_KEF import MKEF
+    from src.kernel import Scaled_PIMQ
+    from src.KSD_Bayes import KSD_Bayes
+    from src.rscm_torch import RSCMEstimator
 
 
 @dataclass
