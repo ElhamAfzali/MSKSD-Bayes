@@ -1,0 +1,16 @@
+Metadata-Version: 2.1
+Name: msksd
+Version: 0.1.0
+Summary: Correcting Mode Proportion Bias in Generalized Bayesian Inference via a Weighted Kernel Stein Discrepancy
+Home-page: https://github.com/ElhamAfzali/MSKSD-Bayes
+Author: Elham Afzali
+Author-email: Elhaam.afzali@gmail.com
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.9
+Requires-Dist: torch
+Requires-Dist: numpy
+Requires-Dist: pandas
+Requires-Dist: matplotlib
+Requires-Dist: tqdm
