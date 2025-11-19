@@ -1,104 +1,28 @@
-# # run_kef.py
-# import torch
-# from dataclasses import dataclass
-# from typing import Optional, Any
-# from Bimodal.KEF import KEF
-# from src.kernel import Scaled_PIMQ
-# from Bimodal.M_KEF import MKEF
-# from src.KSD_Bayes import KSD_Bayes
-# from src.rscm_torch import RSCMEstimator
-#
-#
-# @dataclass
-# class KEFOutput:
-#     """Output structure for KEF0 computations."""
-#     An: torch.Tensor  # Matrix An from KSD
-#     vn: torch.Tensor  # Vector vn from KSD
-#     w: float  # Weight parameter
-#     theta: torch.Tensor
-#
-#
-# def run_KEF(
-#         X: torch.Tensor,
-#         p: int,
-#         L: float,
-#         robust: bool = False,
-#         weighted: bool = False,
-#         weight_factor: float = 1.0,
-#         log_p: Optional[torch.Tensor] = None,
-# ) -> KEFOutput:
-#     """
-#     Run Kernel Exponential Family computations with KSD-Bayes.
-#
-#     Args:
-#         X: Input tensor of shape (n, d)
-#         p: Number of basis functions
-#         L: Width parameter for reference measure
-#         robust: Whether to use robust estimation (default: False)
-#         weighted: Whether to use weighted KSD (default: False)
-#         weight_factor: Scaling factor for weights (default: 1.0)
-#         log_p: Log probability values for weighted KSD (optional)
-#
-#     Returns:
-#         KEFOutput containing KSD matrices and optimal weight
-#     """
-#     # Initialize components
-#     kef = KEF(p=p, L=L)
-#
-#     # Compute regularized scale matrix
-#     rscm = RSCMEstimator()
-#     S = rscm.fit(X, approach='ell1')
-#
-#     # Initialize kernel and preconditioner
-#     kernel = Scaled_PIMQ(S=S)
-#     m_kef = MKEF(robust=robust)
-#
-#     # Create wrapper functions for KSD_Bayes
-#     def grad_T_wrapper(x: torch.Tensor) -> torch.Tensor:
-#         """Wrapper for gradient of T function."""
-#         return kef.grad_T(x)
-#
-#     def grad_b_wrapper(x: torch.Tensor) -> torch.Tensor:
-#         """Wrapper for gradient of b function."""
-#         return kef.grad_b(x)
-#
-#     def M_wrapper(x: torch.Tensor) -> Any:
-#         """Wrapper for preconditioner function."""
-#         return m_kef(x)
-#
-#     def K_wrapper(x: torch.Tensor, y: torch.Tensor) -> Any:
-#         """Wrapper for kernel function."""
-#         return kernel(x, y)
-#
-#     # Run KSD-Bayes
-#     ksd_result = KSD_Bayes(
-#         X=X,
-#         grad_T=grad_T_wrapper,
-#         grad_b=grad_b_wrapper,
-#         M=M_wrapper,
-#         K=K_wrapper,
-#         log_p=log_p,
-#         weighted=weighted,
-#         weight_factor=weight_factor
-#     )
-#
-#     return KEFOutput(
-#         An=ksd_result.An,
-#         vn=ksd_result.vn,
-#         w=ksd_result.w,
-#         theta=ksd_result.theta
-#     )
 
-# run_kef.py
 import torch
+import math
 from dataclasses import dataclass
 from typing import Optional, Any
-from Bimodal.KEF import KEF
-from src.kernel import Scaled_PIMQ
-from Bimodal.M_KEF import MKEF
-from src.KSD_Bayes import KSD_Bayes
-from src.rscm_torch import RSCMEstimator
-import math
+
+try:
+    from .KEF import KEF
+    from .M_KEF import MKEF
+    from ..src.kernel import Scaled_PIMQ
+    from ..src.KSD_Bayes import KSD_Bayes
+    from ..src.rscm_torch import RSCMEstimator
+except ImportError:
+    import sys
+    from pathlib import Path
+
+    project_root = Path(__file__).resolve().parents[2]
+    if str(project_root) not in sys.path:
+        sys.path.insert(0, str(project_root))
+
+    from msksd.Bimodal.KEF import KEF
+    from msksd.Bimodal.M_KEF import MKEF
+    from msksd.src.kernel import Scaled_PIMQ
+    from msksd.src.KSD_Bayes import KSD_Bayes
+    from msksd.src.rscm_torch import RSCMEstimator
 
 
 @dataclass
